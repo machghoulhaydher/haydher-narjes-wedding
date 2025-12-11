@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Save The Date - Compte à Rebours</title>
+    <!-- Chargement de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Utilisation de la police Inter -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7e6e8; /* Rose très pâle pour une ambiance douce */
+        }
+        .title-font {
+            font-family: 'Playfair Display', serif;
+        }
+        .couple-image {
+            object-fit: cover; /* Assure que l'image couvre bien l'espace sans distorsion */
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+    <!-- Le conteneur parent (body) utilise flex items-center justify-center pour centrer horizontalement et verticalement -->
+
+    <!-- Conteneur Principal du Save Le Date -->
+    <div id="event-card" class="w-full max-w-2xl bg-white shadow-2xl rounded-3xl p-8 md:p-12 text-center transform hover:scale-[1.01] transition duration-500 ease-in-out">
+        
+        <!-- En-tête de l'événement -->
+        <h1 class="text-xs uppercase tracking-widest text-pink-600 font-semibold mb-2">
+            Save The Date
+        </h1>
+        <!-- Les prénoms restent centrés et sur une seule ligne (whitespace-nowrap) -->
+        <h2 class="title-font text-5xl md:text-6xl font-extrabold text-gray-800 leading-tight mb-4 whitespace-nowrap">
+            HAYDHER <span class="text-pink-600">&amp;</span> NARJES
+        </h2>
+        <p class="text-lg md:text-xl text-gray-600 mb-8 title-font italic">
+            Célébrons notre union !
+        </p>
+
+        <!-- Détails de l'événement (personnalisez ces informations) -->
+        <div class="space-y-3 mb-10 text-gray-700">
+            <div class="flex items-center justify-center">
+                <svg class="w-6 h-6 mr-3 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <span class="text-xl font-medium">Samedi 05 Septembre 2026 à 14h30</span>
+            </div>
+            <div class="flex items-center justify-center">
+                <svg class="w-6 h-6 mr-3 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.828 0l-4.243-4.243m11.314 11.314L10.05 10.05l-4.243 4.243m11.314-8.485L10.05 10.05l-4.243 4.243m11.314-8.485L13.414 7.07l-4.243 4.243"></path></svg>
+                <span id="event-location" class="text-xl font-medium">KOBET ELNAHS</span>
+            </div>
+        </div>
+
+        <!-- Compte à Rebours -->
+        <div id="countdown-container" class="bg-pink-100 p-6 rounded-2xl shadow-inner border border-pink-200 mb-10">
+            <h3 id="countdown-message" class="text-lg md:text-xl font-semibold text-pink-700 mb-4 uppercase tracking-wider">
+                Plus que...
+            </h3>
+            
+            <div id="countdown-timer" class="flex justify-center space-x-2 md:space-x-6">
+                
+                <!-- Jours -->
+                <div class="flex flex-col items-center p-3 bg-white rounded-xl shadow-lg w-1/4">
+                    <span id="days" class="title-font text-4xl md:text-5xl font-bold text-pink-600 block transition-all duration-300">00</span>
+                    <span class="text-sm md:text-base text-gray-500 mt-1 uppercase">Jours</span>
+                </div>
+                
+                <!-- Heures -->
+                <div class="flex flex-col items-center p-3 bg-white rounded-xl shadow-lg w-1/4">
+                    <span id="hours" class="title-font text-4xl md:text-5xl font-bold text-pink-600 block transition-all duration-300">00</span>
+                    <span class="text-sm md:text-base text-gray-500 mt-1 uppercase">Heures</span>
+                </div>
+                
+                <!-- Minutes -->
+                <div class="flex flex-col items-center p-3 bg-white rounded-xl shadow-lg w-1/4">
+                    <span id="minutes" class="title-font text-4xl md:text-5xl font-bold text-pink-600 block transition-all duration-300">00</span>
+                    <span class="text-sm md:text-base text-gray-500 mt-1 uppercase">Minutes</span>
+                </div>
+                
+                <!-- Secondes -->
+                <div class="flex flex-col items-center p-3 bg-white rounded-xl shadow-lg w-1/4">
+                    <span id="seconds" class="title-font text-4xl md:text-5xl font-bold text-pink-600 block transition-all duration-300">00</span>
+                    <span class="text-sm md:text-base text-gray-500 mt-1 uppercase">Secondes</span>
+                </div>
+            </div>
+        </div>
+        <!-- La section des fonctionnalités Gemini (Fonctionnalités Intelligentes) a été retirée. -->
+    </div>
+
+    <script>
+        // Définition de la date et l'heure de l'événement (format: Mois Jour, Année Heure:Minute:Seconde Fuseau Horaire)
+        // Date actuelle : 05 Septembre 2026 à 14h30
+        const eventDate = new Date("September 05, 2026 14:30:00 GMT+0100").getTime();
+
+        // Références aux éléments du DOM pour le compte à rebours
+        const daysEl = document.getElementById('days');
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+        const countdownMessageEl = document.getElementById('countdown-message');
+        const eventCardEl = document.getElementById('event-card');
+
+        /**
+         * Met à jour l'affichage du compte à rebours.
+         */
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                daysEl.textContent = '00';
+                hoursEl.textContent = '00';
+                minutesEl.textContent = '00';
+                secondsEl.textContent = '00';
+                countdownMessageEl.textContent = "C'EST LE GRAND JOUR !";
+                eventCardEl.classList.add('animate-pulse');
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            const formatTime = (unit) => String(unit).padStart(2, '0');
+
+            daysEl.textContent = formatTime(days);
+            hoursEl.textContent = formatTime(hours);
+            minutesEl.textContent = formatTime(minutes);
+            secondsEl.textContent = formatTime(seconds);
+
+            // Petit effet de "saut" sur les secondes pour l'animation
+            secondsEl.classList.remove('scale-105');
+            // Force le navigateur à rafraîchir l'état
+            void secondsEl.offsetWidth; 
+            secondsEl.classList.add('scale-105');
+        }
+        
+        // Exécute la fonction immédiatement pour éviter un flash de '00'
+        updateCountdown();
+
+        // Met à jour le compte à rebours toutes les secondes
+        const countdownInterval = setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
